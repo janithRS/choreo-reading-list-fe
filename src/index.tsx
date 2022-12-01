@@ -4,6 +4,7 @@ import { getBooks } from "./api/books/get-books";
 import { Book } from "./api/books/types/book";
 import groupBy from "lodash/groupBy";
 import AddItem from "./components/modal/fragments/add-item";
+import { deleteBooks } from "./api/books/delete-books";
 
 export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -14,18 +15,26 @@ export default function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  async function getReadingList() {
+    setIsLoading(true);
+    const response = await getBooks();
+    const grouped = groupBy(response.data, (item) => item.status);
+    setReadList(grouped);
+    setIsLoading(false);
+  }
+
   useEffect(() => {
-    async function getReadingList() {
-      setIsLoading(true);
-      const response = await getBooks();
-      const grouped = groupBy(response.data, (item) => item.status);
-      setReadList(grouped);
-      setIsLoading(false);
-    }
     if (!isOpen) {
       getReadingList();
     }
   }, [isOpen]);
+
+  const handleDelete = async (id: string) => {
+    setIsLoading(true);
+    await deleteBooks(id);
+    getReadingList();
+    setIsLoading(false);
+  };
 
   return (
     <div className="w-full max-w-md px-2 py-16 sm:px-0 mb-20">
@@ -85,7 +94,10 @@ export default function App() {
                         <li>&middot;</li>
                       </ul>
                     </li>
-                    <button className="float-right bg-red-500 text-white rounded-md self-center text-xs p-2 mr-2">
+                    <button
+                      className="float-right bg-red-500 text-white rounded-md self-center text-xs p-2 mr-2"
+                      onClick={() => handleDelete(book.id)}
+                    >
                       Delete
                     </button>
                   </div>

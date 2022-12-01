@@ -1,14 +1,12 @@
-import { AxiosResponse } from "axios";
 import { getReadingListInstance } from "./instance";
-import { Book } from "./types/book";
 
-export async function getBooks() {
+export async function deleteBooks(id: string) {
   const bearerToken = `eyJ4NXQiOiJZV1kxTm1Sa1pHSTVNekU0T0RCbFpEUmlNV0k0WldKbE5qRXhaV1ZpWmpFek1tTm1ORFUzWVEiLCJraWQiOiJNV1E1TldVd1lXWmlNbU16WlRJek16ZG1NekJoTVdNNFlqUXlNalZoTldNNE5qaGtNR1JtTnpGbE1HSTNaRGxtWW1Rek5tRXlNemhoWWpCaU5tWmhZd19SUzI1NiIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1Mjc1YWY3YS01M2E4LTQzNDctYmU1OS0xMjA4Mjg2NTI4YjgiLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6IlZmb09aRmcwaHJPZWQwa1BXN3R3Nms0QmpTWWEiLCJuYmYiOjE2Njk4NzI1MDUsImF6cCI6IlZmb09aRmcwaHJPZWQwa1BXN3R3Nms0QmpTWWEiLCJzY29wZSI6ImRlZmF1bHQiLCJvcmdhbml6YXRpb24iOnsidXVpZCI6IjZkZTUwMGFmLTQ2MDgtNDZjYS05NDRiLTlmOTgxMDgwN2JkYSJ9LCJpc3MiOiJodHRwczpcL1wvc3RzLmNob3Jlby5kZXY6NDQzXC9vYXV0aDJcL3Rva2VuIiwiZXhwIjoxNjY5ODc2MTA1LCJpYXQiOjE2Njk4NzI1MDUsImp0aSI6ImEwYzRlZmRjLTBhMzEtNDQzYy1hM2U1LTQyZTVmOWQ4NjAyNSJ9.JOp-hywcXigxUKy4tQgG1BGv1qUN3jUUpIG7Vv-mJNJaUluiM_GpfQKvWvlew-pUoSvF71o4zLOyz55y7Kqa2hZtoiTE_pjXPU8S35ufyymRkFYqlRkqIRWfFcmjd-M43RmMYp3Hc2nAAN6z1U57mzqW1PsCqKKQ4KjEW1bfnK_NvAGE8uowHUp2_OoPMDJeKM4df030qjYnMAKIHNDv1TX2f7DYkvUDmw6rgX9DtspdyyYTRlWzwoXglI5waUjaHFL3bsziqASrpf3uyZMm1Qp4Rzf9xbvi9peF2N1eBbRjegePQ9B65Rmc4sBj-Fgl1y3qfoQmA4O3f67q7tej5mMmfo8PyT4xek-t6yLXzuOfzxLx-30uLf3u_NoN3VFaGia0vyv4BmdIOCH-Up6u7U2j6Z2TUa37DSEZirYZ6j_3Jr6WZbmiS7fa7raFVWoIwG2ZgfzXqdu_cULxL3uW23Wx9aJicO9ioQUTGt-04jCalysp-XLdr8Xah_Zf84_jnGDVqwxzbuQFNs8hPRj6WRL12UkIOrGQFNXyNt5jCs6-GQq_cCOiV1ssdpHnw5xcaYpZAVnBt8Iq87NsLx-hRBpMG_Lc8MTlo0csZukjCmINWlgfapEqw5fseLG9zzVZYl-ueQ_qDYUpyctFZMmrMiErpiFN8ix23xmZHFwRIfI`;
-  const config = {
-    headers: {
-      Authorization: `Bearer ${bearerToken}`,
-    },
+  const headers = {
+    Authorization: `Bearer ${bearerToken}`,
   };
-  const response = await getReadingListInstance().get("/books", config);
-  return response as AxiosResponse<Book[]>;
+  const response = await getReadingListInstance().delete(`/books?id=${id}`, {
+    headers: headers,
+  });
+  return response;
 }
