@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@asgardeo/auth-react": "^1.1.18",
+    "@asgardeo/token-exchange-plugin": "^0.1.6",
     "@headlessui/react": "^1.7.4",
     "axios": "^1.2.0",
     "lodash": "^4.17.21",
