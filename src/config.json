@@ -1,0 +1,11 @@
+{
+  "clientID": "aXNAiBBoVJ1g1HT9IC0LrwG6izEa",
+  "baseUrl": "https://api.asgardeo.io/t/janithrs",
+  "signInRedirectURL": "https://localhost:5173",
+  "signOutRedirectURL": "https://localhost:5173",
+  "scope": ["openid", "profile"],
+  "resourceServerURLs": [
+    "https://6de500af-4608-46ca-944b-9f9810807bda-dev.e1-us-east-azure.choreoapis.dev/pera/reading-list-service/1.0.0",
+    "https://sts.choreo.dev/oauth2/token"
+  ]
+}

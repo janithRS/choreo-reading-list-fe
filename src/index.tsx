@@ -15,15 +15,48 @@ export default function App() {
   const [readList, setReadList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { state, signIn, signOut } = useAuthContext();
+  const { signIn, signOut, getAccessToken } = useAuthContext();
+  const [accessToken, setAccessToken] = useState<null | string>(null);
+  const [isTokenFetching, setIsTokenFetching] = useState(false);
+
+  useEffect(() => {
+    async function setToken() {
+      setIsTokenFetching(true);
+      const accessToken = await getAccessToken();
+      setAccessToken(accessToken);
+      setIsTokenFetching(false);
+    }
+    setToken().then(() => {
+      getReadingList();
+    });
+  }, []);
 
   async function getReadingList() {
     setIsLoading(true);
-    const response = await getBooks();
-    const grouped = groupBy(response.data, (item) => item.status);
-    setReadList(grouped);
-    setIsLoading(false);
+    const accessToken = await getAccessToken();
+    getBooks(accessToken)
+      .then((res) => {
+        console.log(res);
+        const grouped = groupBy(res.data, (item) => item.status);
+        setReadList(grouped);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
+
+  const [signedIn, setSignedIn] = useState(false);
+
+  const handleClick = (): void => {
+    signIn()
+      .then(() => {
+        setSignedIn(true);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
     if (!isOpen) {
@@ -32,17 +65,18 @@ export default function App() {
   }, [isOpen]);
 
   const handleDelete = async (id: string) => {
+    const accessToken = await getAccessToken();
     setIsLoading(true);
-    await deleteBooks(id);
+    await deleteBooks(accessToken, id);
     getReadingList();
     setIsLoading(false);
   };
 
-  if (!state.isAuthenticated) {
+  if (!accessToken) {
     return (
       <button
         className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
-        onClick={() => signIn()}
+        onClick={() => handleClick()}
       >
         Login
       </button>
@@ -58,6 +92,12 @@ export default function App() {
           onClick={() => setIsOpen(true)}
         >
           + Add New
+        </button>
+        <button
+          className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
+          onClick={() => signOut()}
+        >
+          Logout
         </button>
       </div>
 

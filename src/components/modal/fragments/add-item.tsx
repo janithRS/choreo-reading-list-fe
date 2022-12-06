@@ -3,6 +3,7 @@ import { postBooks } from "../../../api/books/post-books";
 import { Book, Status } from "../../../api/books/types/book";
 import Modal from "../modal";
 import { v4 as uuid } from "uuid";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 export interface AddItemProps {
   isOpen: boolean;
@@ -13,16 +14,18 @@ export default function AddItem(props: AddItemProps) {
   const { isOpen, setIsOpen } = props;
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
+  const { getAccessToken } = useAuthContext();
 
   const handleOnSubmit = () => {
     async function setBooks() {
+      const accessToken = await getAccessToken();
       const payload: Book = {
         name: name,
         author: author,
         id: uuid(),
         status: Status.to_read,
       };
-      const response = await postBooks(payload);
+      const response = await postBooks(accessToken, payload);
       setIsOpen(false);
       console.log(response);
     }
