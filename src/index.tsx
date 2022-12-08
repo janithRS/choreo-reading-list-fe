@@ -16,37 +16,36 @@ export default function App() {
   const [readList, setReadList] = useState<Dictionary<Book[]> | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, signOut, getAccessToken, state } = useAuthContext();
-  const [accessToken, setAccessToken] = useState<null | string>(null);
-  const [isTokenFetching, setIsTokenFetching] = useState(false);
+  const {
+    signIn,
+    signOut,
+    getAccessToken,
+    state,
+    isAuthenticated,
+    revokeAccessToken,
+  } = useAuthContext();
   const [signedIn, setSignedIn] = useState(false);
 
-  const handleClick = (): void => {
-    signIn()
-      .then(() => {
-        setSignedIn(true);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
   useEffect(() => {
-    async function setToken() {
-      setIsTokenFetching(true);
-      const accessToken = await getAccessToken();
-      setAccessToken(accessToken);
-      setIsTokenFetching(false);
+    async function signInCheck() {
+      const isSignedIn = await isAuthenticated();
+      setSignedIn(isSignedIn);
+      return isSignedIn;
     }
-    setToken();
-    getReadingList();
-  }, [signedIn]);
+    signInCheck().then((res) => {
+      if (res) {
+        getReadingList();
+      } else {
+        console.log("User has not signed in");
+      }
+    });
+  }, []);
 
   async function getReadingList() {
     setIsLoading(true);
     const accessToken = await getAccessToken();
     getBooks(accessToken)
       .then((res) => {
-        console.log(res);
         const grouped = groupBy(res.data, (item) => item.status);
         setReadList(grouped);
         setIsLoading(false);
@@ -70,11 +69,11 @@ export default function App() {
     setIsLoading(false);
   };
 
-  if (!accessToken && !state.isAuthenticated) {
+  if (!signedIn) {
     return (
       <button
         className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
-        onClick={() => handleClick()}
+        onClick={() => signIn()}
       >
         Login
       </button>
