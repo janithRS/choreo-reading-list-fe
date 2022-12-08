@@ -27,9 +27,7 @@ export default function App() {
       setAccessToken(accessToken);
       setIsTokenFetching(false);
     }
-    setToken().then(() => {
-      getReadingList();
-    });
+    getReadingList();
   }, []);
 
   async function getReadingList() {
@@ -88,18 +86,20 @@ export default function App() {
     <div className="w-full max-w-md px-2 py-16 sm:px-0 mb-20">
       <div className="flex justify-between">
         <p className="text-4xl text-white mb-3 font-bold">Reading List</p>
-        <button
-          className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
-          onClick={() => setIsOpen(true)}
-        >
-          + Add New
-        </button>
-        <button
-          className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
-          onClick={() => signOut()}
-        >
-          Logout
-        </button>
+        <>
+          <button
+            className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
+            onClick={() => setIsOpen(true)}
+          >
+            + Add New
+          </button>
+          <button
+            className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
+            onClick={() => signOut()}
+          >
+            Logout
+          </button>
+        </>
       </div>
       {readList && (
         <Tab.Group>
