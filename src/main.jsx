@@ -7,8 +7,10 @@ import { AuthProvider } from "@asgardeo/auth-react";
 import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 
 const config = {
-  signInRedirectURL: "http://localhost:5173/",
-  signOutRedirectURL: "http://localhost:5173/",
+  signInRedirectURL:
+    "https://choreo-reading-list-fe-git-v3-janithrs.vercel.app/:5173/",
+  signOutRedirectURL:
+    "https://choreo-reading-list-fe-git-v3-janithrs.vercel.app/:5173/",
   clientID: "aXNAiBBoVJ1g1HT9IC0LrwG6izEa",
   baseUrl: "https://api.asgardeo.io/t/janithrs",
   scope: ["openid", "profile"],
