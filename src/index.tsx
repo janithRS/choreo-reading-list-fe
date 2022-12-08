@@ -19,7 +19,17 @@ export default function App() {
   const { signIn, signOut, getAccessToken, state } = useAuthContext();
   const [accessToken, setAccessToken] = useState<null | string>(null);
   const [isTokenFetching, setIsTokenFetching] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
+  const handleClick = (): void => {
+    signIn()
+      .then(() => {
+        setSignedIn(true);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   useEffect(() => {
     async function setToken() {
       setIsTokenFetching(true);
@@ -27,8 +37,9 @@ export default function App() {
       setAccessToken(accessToken);
       setIsTokenFetching(false);
     }
+    setToken();
     getReadingList();
-  }, []);
+  }, [signedIn]);
 
   async function getReadingList() {
     setIsLoading(true);
@@ -44,18 +55,6 @@ export default function App() {
         console.log(e);
       });
   }
-
-  const [signedIn, setSignedIn] = useState(false);
-
-  const handleClick = (): void => {
-    signIn()
-      .then(() => {
-        setSignedIn(true);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   useEffect(() => {
     if (!isOpen) {
@@ -83,7 +82,7 @@ export default function App() {
   }
 
   return (
-    <div className="w-full max-w-md px-2 py-16 sm:px-0 mb-20">
+    <div className="w-full max-w-lg px-2 py-16 sm:px-0 mb-20">
       <div className="flex justify-between">
         <p className="text-4xl text-white mb-3 font-bold">Reading List</p>
         <>
@@ -92,6 +91,12 @@ export default function App() {
             onClick={() => setIsOpen(true)}
           >
             + Add New
+          </button>
+          <button
+            className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
+            onClick={() => getReadingList()}
+          >
+            Refresh List
           </button>
           <button
             className="float-right bg-black bg-opacity-20 p-2 rounded-md text-sm my-3 font-medium text-white"
