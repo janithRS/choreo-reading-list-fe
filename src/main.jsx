@@ -8,9 +8,9 @@ import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 
 const config = {
   signInRedirectURL:
-    "https://choreo-reading-list-fe-git-v3-janithrs.vercel.app/:5173/",
+    "https://choreo-reading-list-fe-git-v3-janithrs.vercel.app/",
   signOutRedirectURL:
-    "https://choreo-reading-list-fe-git-v3-janithrs.vercel.app/:5173/",
+    "https://choreo-reading-list-fe-git-v3-janithrs.vercel.app/",
   clientID: "aXNAiBBoVJ1g1HT9IC0LrwG6izEa",
   baseUrl: "https://api.asgardeo.io/t/janithrs",
   scope: ["openid", "profile"],
