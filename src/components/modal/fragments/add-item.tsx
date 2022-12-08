@@ -22,7 +22,6 @@ export default function AddItem(props: AddItemProps) {
       const payload: Book = {
         name: name,
         author: author,
-        id: uuid(),
         status: Status.to_read,
       };
       const response = await postBooks(accessToken, payload);
