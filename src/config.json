@@ -1,6 +1,6 @@
 {
-  "signInRedirectURL": "http://localhost:5173/",
-  "signOutRedirectURL": "http://localhost:5173/",
+  "signInRedirectURL": "https://choreo-reading-list-fe-git-v4-janithrs.vercel.app/",
+  "signOutRedirectURL": "https://choreo-reading-list-fe-git-v4-janithrs.vercel.app/",
   "clientID": "aXNAiBBoVJ1g1HT9IC0LrwG6izEa",
   "baseUrl": "https://api.asgardeo.io/t/janithrs",
   "scope": ["openid", "profile"],
