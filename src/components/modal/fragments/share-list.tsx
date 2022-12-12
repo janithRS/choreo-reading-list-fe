@@ -21,7 +21,7 @@ export default function ShareList(props: ShareListProps) {
     async function setBooks() {
       const accessToken = await getAccessToken();
       const payload: Book = {
-        name: name,
+        title: name,
         author: author,
       };
       const response = await postBooks(accessToken, payload);
@@ -33,7 +33,8 @@ export default function ShareList(props: ShareListProps) {
 
   const innerFragment = (
     <div className="mt-2">
-      <form className="bg-white rounded pt-2 pb-1">
+      <p>This feature is not available yet.</p>
+      {/* <form className="bg-white rounded pt-2 pb-1">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Name
@@ -63,7 +64,7 @@ export default function ShareList(props: ShareListProps) {
             Status
           </label>
         </div>
-      </form>
+      </form> */}
     </div>
   );
   return (
